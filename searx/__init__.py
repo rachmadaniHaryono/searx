@@ -83,13 +83,14 @@ else:
 
 searx_log_to_file = environ.get('SEARX_LOG_TO_FILE', '').lower()
 searx_log_to_file = searx_log_to_file in ('true', '1')  # type: ignore
+log_file = None
 if searx_log_to_file and sys.version_info[0] == 3:
     try:
         import appdirs  # type: ignore
     except ImportError:
         appdirs = None
     current_date = date.today()
-    log_filename = '{year}_{month}.log'.format(
+    log_filename = '{}_{}.log'.format(
         current_date.year, current_date.month)
     if appdirs:
         log_file = join(
@@ -106,6 +107,8 @@ if searx_log_to_file and sys.version_info[0] == 3:
 
 
 logger = logging.getLogger('searx')
+if log_file:
+    logger.debug('logfile: {}'.format(log_file))
 logger.debug('read configuration from %s', settings_path)
 # Workaround for openssl versions <1.0.2
 # https://github.com/certifi/python-certifi/issues/26
