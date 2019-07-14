@@ -17,6 +17,8 @@ along with searx. If not, see < http://www.gnu.org/licenses/ >.
 
 import certifi
 import logging
+import sys
+from datetime import date
 from os import environ
 from os.path import realpath, dirname, join, abspath, isfile
 from io import open
@@ -77,6 +79,31 @@ if searx_debug:
     logging.basicConfig(level=logging.DEBUG)
 else:
     logging.basicConfig(level=logging.WARNING)
+
+
+searx_log_to_file = environ.get('SEARX_LOG_TO_FILE', '').lower()
+searx_log_to_file = searx_log_to_file in ('true', '1')  # type: ignore
+if searx_log_to_file and sys.version_info[0] == 3:
+    try:
+        import appdirs  # type: ignore
+    except ImportError:
+        appdirs = None
+    current_date = date.today()
+    log_filename = '{year}_{month}.log'.format(
+        current_date.year, current_date.month)
+    if appdirs:
+        log_file = join(
+            appdirs.user_data_dir('searx', 'asciimoo'),
+            'log', log_filename)
+    else:
+        log_file = 'searx_{}'.format(log_filename)
+    log_file_dirname = dirname(log_file)
+    if log_file_dirname:
+        import pathlib
+        pathlib.Path(log_file_dirname).mkdir(parents=True, exist_ok=True)
+    file_handler = logging.FileHandler(log_file)
+    logging.getLogger().addHandler(file_handler)
+
 
 logger = logging.getLogger('searx')
 logger.debug('read configuration from %s', settings_path)
