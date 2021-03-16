@@ -132,7 +132,7 @@ $ sudo -i -u <span class="s2">&quot;morty&quot;</span>
 <span class="nv">User</span><span class="o">=</span>morty
 <span class="nv">Group</span><span class="o">=</span>morty
 <span class="nv">WorkingDirectory</span><span class="o">=</span>/usr/local/morty
-<span class="nv">ExecStart</span><span class="o">=</span>/usr/local/morty/go-apps/bin/morty -key <span class="s1">&#39;&#39;</span> -listen <span class="s1">&#39;127.0.0.1:3000&#39;</span> -timeout 5
+<span class="nv">ExecStart</span><span class="o">=</span>/usr/local/morty/go-apps/bin/morty -key <span class="s1">&#39;&#39;</span> -listen <span class="s1">&#39;127.0.0.1:3000&#39;</span> -timeout <span class="m">5</span>
 
 <span class="nv">Restart</span><span class="o">=</span>always
 <span class="nv">Environment</span><span class="o">=</span><span class="nv">USER</span><span class="o">=</span>morty <span class="nv">HOME</span><span class="o">=</span>/usr/local/morty <span class="nv">DEBUG</span><span class="o">=</span><span class="nb">false</span>
