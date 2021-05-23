@@ -214,6 +214,7 @@ $ sudo -H sed -i -e <span class="s2">&quot;s/{instance_name}/searx@</span><span 
     <span class="nt">debug </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">False</span> <span class="c1"># Debug mode, only for development</span>
     <span class="nt">instance_name </span><span class="p">:</span> <span class="s">&quot;searx&quot;</span> <span class="c1"># displayed name</span>
     <span class="nt">contact_url</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">False</span> <span class="c1"># mailto:contact@example.com</span>
+    <span class="nt">enable_stats</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">False</span> <span class="c1"># activate /stats page - note: it may leak usage data</span>
 
 <span class="nt">brand</span><span class="p">:</span>
     <span class="nt">git_url</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">https://github.com/searx/searx</span>
@@ -279,19 +280,17 @@ $ sudo -H sed -i -e <span class="s2">&quot;s/{instance_name}/searx@</span><span 
 <span class="c1">#    key : !!binary &quot;your_morty_proxy_key&quot;</span>
 
 <span class="nt">outgoing</span><span class="p">:</span> <span class="c1"># communication with search engines</span>
-    <span class="nt">request_timeout </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">2.0</span> <span class="c1"># default timeout in seconds, can be override by engine</span>
+    <span class="nt">request_timeout </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">3.0</span> <span class="c1"># default timeout in seconds, can be override by engine</span>
     <span class="c1"># max_request_timeout: 10.0 # the maximum timeout in seconds</span>
     <span class="nt">useragent_suffix </span><span class="p">:</span> <span class="s">&quot;&quot;</span> <span class="c1"># suffix of searx_useragent, could contain informations like an email address to the administrator</span>
-    <span class="nt">pool_connections </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">100</span> <span class="c1"># Number of different hosts</span>
-    <span class="nt">pool_maxsize </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">10</span> <span class="c1"># Number of simultaneous requests by host</span>
+    <span class="nt">pool_connections </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">100</span> <span class="c1"># The maximum number of concurrent connections that may be established.</span>
+    <span class="nt">pool_maxsize </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">20</span> <span class="c1"># Allow the connection pool to maintain keep-alive connections below this point.</span>
+    <span class="nt">enable_http2</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>  <span class="c1"># See https://www.python-httpx.org/http2/</span>
 <span class="c1"># uncomment below section if you want to use a proxy</span>
 <span class="c1"># see https://2.python-requests.org/en/latest/user/advanced/#proxies</span>
 <span class="c1"># SOCKS proxies are also supported: see https://2.python-requests.org/en/latest/user/advanced/#socks</span>
 <span class="c1">#    proxies:</span>
-<span class="c1">#        http:</span>
-<span class="c1">#            - http://proxy1:8080</span>
-<span class="c1">#            - http://proxy2:8080</span>
-<span class="c1">#        https:</span>
+<span class="c1">#        all://:</span>
 <span class="c1">#            - http://proxy1:8080</span>
 <span class="c1">#            - http://proxy2:8080</span>
 <span class="c1">#    using_tor_proxy : True</span>
@@ -301,6 +300,7 @@ $ sudo -H sed -i -e <span class="s2">&quot;s/{instance_name}/searx@</span><span 
 <span class="c1">#    source_ips:</span>
 <span class="c1">#        - 1.1.1.1</span>
 <span class="c1">#        - 1.1.1.2</span>
+<span class="c1">#        - fe80::/126</span>
 
 <span class="c1"># External plugin configuration</span>
 <span class="c1"># See http://searx.github.io/searx/dev/plugins.html for more details</span>
@@ -315,6 +315,18 @@ $ sudo -H sed -i -e <span class="s2">&quot;s/{instance_name}/searx@</span><span 
 <span class="c1"># enabled_plugins:</span>
 <span class="c1">#   - &quot;HTTPS rewrite&quot;</span>
 <span class="c1">#   - ...</span>
+
+<span class="c1"># Example to rewrite hostnames in external links</span>
+<span class="c1">#</span>
+<span class="c1"># enabled_plugins:</span>
+<span class="c1">#   - &#39;Hostname replace&#39;</span>
+<span class="c1"># hostname_replace:</span>
+<span class="c1">#   &#39;(.*\.)?youtube\.com$&#39;:           &#39;invidious.example.com&#39;</span>
+<span class="c1">#   &#39;(.*\.)?youtu\.be$&#39;:              &#39;invidious.example.com&#39;</span>
+<span class="c1">#   &#39;(.*\.)?youtube-noocookie\.com$&#39;: &#39;yotter.example.com&#39;</span>
+<span class="c1">#   &#39;(.*\.)?reddit\.com$&#39;:            &#39;teddit.example.com&#39;</span>
+<span class="c1">#   &#39;(.*\.)?redd\.it$&#39;:               &#39;teddit.example.com&#39;</span>
+<span class="c1">#   &#39;(www\.)?twitter\.com$&#39;:          &#39;nitter.example.com&#39;</span>
 
 <span class="nt">checker</span><span class="p">:</span>
     <span class="c1"># disable checker when in debug mode</span>
@@ -382,7 +394,7 @@ $ sudo -H sed -i -e <span class="s2">&quot;s/{instance_name}/searx@</span><span 
 
   <span class="p p-Indicator">-</span> <span class="nt">name </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">archive is</span>
     <span class="nt">engine </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">xpath</span>
-    <span class="nt">search_url </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">https://archive.is/{query}</span>
+    <span class="nt">search_url </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">https://archive.is/search/?q={query}</span>
     <span class="nt">url_xpath </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">(//div[@class=&quot;TEXT-BLOCK&quot;]/a)/@href</span>
     <span class="nt">title_xpath </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">(//div[@class=&quot;TEXT-BLOCK&quot;]/a)</span>
     <span class="nt">content_xpath </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">//div[@class=&quot;TEXT-BLOCK&quot;]/ul/li</span>
@@ -390,6 +402,7 @@ $ sudo -H sed -i -e <span class="s2">&quot;s/{instance_name}/searx@</span><span 
     <span class="nt">timeout </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">7.0</span>
     <span class="nt">disabled </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
     <span class="nt">shortcut </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ai</span>
+    <span class="nt">soft_max_redirects</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">1</span>
     <span class="nt">about</span><span class="p">:</span>
       <span class="nt">website</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">https://archive.is/</span>
       <span class="nt">wikidata_id</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Q13515725</span>
@@ -418,6 +431,24 @@ $ sudo -H sed -i -e <span class="s2">&quot;s/{instance_name}/searx@</span><span 
     <span class="nt">engine </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">wikipedia</span>
     <span class="nt">shortcut </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">wp</span>
     <span class="nt">base_url </span><span class="p">:</span> <span class="s">&#39;https://{language}.wikipedia.org/&#39;</span>
+    
+    <span class="c1">#The fulltext and title parameter is necessary for Wikimini because sometimes it will not show the results and redirect instead</span>
+  <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">wikimini</span>
+    <span class="nt">engine</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">wikimini</span>
+    <span class="nt">shortcut</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">wkmn</span>
+    <span class="nt">base_url </span><span class="p">:</span> <span class="s">&#39;https://{language}.wikimini.org/&#39;</span>
+    <span class="nt">paging </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">False</span>
+    <span class="nt">search_url </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">https://{language}.wikimini.org/w/index.php?search={query}&amp;title=Sp%C3%A9cial%3ASearch&amp;fulltext=Search</span>
+    <span class="nt">url_xpath </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">//li/div[@class=&quot;mw-search-result-heading&quot;]/a/@href</span>
+    <span class="nt">title_xpath </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">//li//div[@class=&quot;mw-search-result-heading&quot;]/a</span>
+    <span class="nt">content_xpath </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">//li/div[@class=&quot;searchresult&quot;]</span>
+    <span class="nt">categories </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">general</span>
+    <span class="nt">about</span><span class="p">:</span>
+      <span class="nt">website</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">https://wikimini.org/</span>
+      <span class="nt">wikidata_id</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Q3568032</span>
+      <span class="nt">use_official_api</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">false</span>
+      <span class="nt">require_api_key</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">false</span>
+      <span class="nt">results</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">HTML</span>
 
   <span class="p p-Indicator">-</span> <span class="nt">name </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">bing</span>
     <span class="nt">engine </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">bing</span>
@@ -480,6 +511,13 @@ $ sudo -H sed -i -e <span class="s2">&quot;s/{instance_name}/searx@</span><span 
     <span class="nt">engine </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ccengine</span>
     <span class="nt">categories </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">images</span>
     <span class="nt">shortcut </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">cce</span>
+
+<span class="c1"># - name : core.ac.uk</span>
+<span class="c1">#   engine : core</span>
+<span class="c1">#   categories : science</span>
+<span class="c1">#   shortcut : cor</span>
+<span class="c1">#   # get your API key from: https://core.ac.uk/api-keys/register/</span>
+<span class="c1">#   api_key : &#39;unset&#39;</span>
 
   <span class="p p-Indicator">-</span> <span class="nt">name </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">crossref</span>
     <span class="nt">engine </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">json_engine</span>
@@ -1052,6 +1090,16 @@ $ sudo -H sed -i -e <span class="s2">&quot;s/{instance_name}/searx@</span><span 
     <span class="nt">url</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">https://thepiratebay.org/</span>
     <span class="nt">timeout </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">3.0</span>
 
+<span class="c1"># Required dependency: psychopg2</span>
+<span class="c1">#  - name : postgresql</span>
+<span class="c1">#    engine : postgresql</span>
+<span class="c1">#    database : postgres</span>
+<span class="c1">#    username : postgres</span>
+<span class="c1">#    password : postgres</span>
+<span class="c1">#    limit : 10</span>
+<span class="c1">#    query_str : &#39;SELECT * from my_table WHERE my_column = %(query)s&#39;</span>
+<span class="c1">#    shortcut : psql</span>
+
   <span class="p p-Indicator">-</span> <span class="nt">name </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">pubmed</span>
     <span class="nt">engine </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">pubmed</span>
     <span class="nt">shortcut </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">pub</span>
@@ -1070,11 +1118,13 @@ $ sudo -H sed -i -e <span class="s2">&quot;s/{instance_name}/searx@</span><span 
     <span class="nt">engine </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">qwant</span>
     <span class="nt">shortcut </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">qwi</span>
     <span class="nt">categories </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">images</span>
+    <span class="nt">network</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">qwant</span>
 
   <span class="p p-Indicator">-</span> <span class="nt">name </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">qwant news</span>
     <span class="nt">engine </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">qwant</span>
     <span class="nt">shortcut </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">qwn</span>
     <span class="nt">categories </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">news</span>
+    <span class="nt">network</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">qwant</span>
 
 <span class="c1">#  - name: library</span>
 <span class="c1">#    engine: recoll</span>
@@ -1172,6 +1222,15 @@ $ sudo -H sed -i -e <span class="s2">&quot;s/{instance_name}/searx@</span><span 
 <span class="c1">#    query_fields : &#39;&#39; # query fields</span>
 <span class="c1">#    enable_http : True</span>
 
+<span class="c1"># - name : springer nature</span>
+<span class="c1">#   engine : springer</span>
+<span class="c1">#   # get your API key from: https://dev.springernature.com/signup</span>
+<span class="c1">#   api_key : &#39;unset&#39; # working API key, for test &amp; debug: &quot;a69685087d07eca9f13db62f65b8f601&quot;</span>
+<span class="c1">#   disabled: True</span>
+<span class="c1">#   shortcut : springer</span>
+<span class="c1">#   categories : science</span>
+<span class="c1">#   timeout : 6.0</span>
+
   <span class="p p-Indicator">-</span> <span class="nt">name </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">startpage</span>
     <span class="nt">engine </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">startpage</span>
     <span class="nt">shortcut </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">sp</span>
@@ -1191,6 +1250,13 @@ $ sudo -H sed -i -e <span class="s2">&quot;s/{instance_name}/searx@</span><span 
     <span class="nt">shortcut </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">solid</span>
     <span class="nt">timeout </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">3.0</span>
     <span class="nt">disabled </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+
+<span class="c1">#  - name : sqlite</span>
+<span class="c1">#    engine : sqlite</span>
+<span class="c1">#    shortcut: sq</span>
+<span class="c1">#    database : mydb</span>
+<span class="c1">#    query_str : &#39;SELECT * FROM mytable WHERE fieldname=:query&#39;</span>
+<span class="c1">#    disabled : True</span>
 
   <span class="p p-Indicator">-</span> <span class="nt">name </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">torrentz</span>
     <span class="nt">engine </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">torrentz</span>
@@ -1383,6 +1449,16 @@ $ sudo -H sed -i -e <span class="s2">&quot;s/{instance_name}/searx@</span><span 
     <span class="c1"># You can use without an API key, but you are limited to 1000 words/day</span>
     <span class="c1"># See : http://mymemory.translated.net/doc/usagelimits.php</span>
     <span class="c1"># api_key : &#39;&#39;</span>
+
+<span class="c1"># Required dependency: mysql-connector-python</span>
+<span class="c1">#  - name : mysql</span>
+<span class="c1">#    engine : mysql_server</span>
+<span class="c1">#    database : mydatabase</span>
+<span class="c1">#    username : user</span>
+<span class="c1">#    password : pass</span>
+<span class="c1">#    limit : 10</span>
+<span class="c1">#    query_str : &#39;SELECT * from mytable WHERE fieldname=%(query)s&#39;</span>
+<span class="c1">#    shortcut : mysql</span>
 
   <span class="p p-Indicator">-</span> <span class="nt">name </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">1337x</span>
     <span class="nt">engine </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">1337x</span>
@@ -1633,7 +1709,12 @@ $ sudo -H sed -i -e <span class="s2">&quot;s/{instance_name}/searx@</span><span 
   <span class="nt">oadoi.org </span><span class="p">:</span> <span class="s">&#39;https://oadoi.org/&#39;</span>
   <span class="nt">doi.org </span><span class="p">:</span> <span class="s">&#39;https://doi.org/&#39;</span>
   <span class="nt">doai.io  </span><span class="p">:</span> <span class="s">&#39;https://dissem.in/&#39;</span>
-  <span class="nt">sci-hub.tw </span><span class="p">:</span> <span class="s">&#39;https://sci-hub.tw/&#39;</span>
+  <span class="nt">sci-hub.se </span><span class="p">:</span> <span class="s">&#39;https://sci-hub.se/&#39;</span>
+  <span class="nt">sci-hub.do </span><span class="p">:</span> <span class="s">&#39;https://sci-hub.do/&#39;</span>
+  <span class="nt">scihubtw.tw </span><span class="p">:</span> <span class="s">&#39;https://scihubtw.tw/&#39;</span>
+  <span class="nt">sci-hub.st </span><span class="p">:</span> <span class="s">&#39;https://sci-hub.st/&#39;</span>
+  <span class="nt">sci-hub.bar </span><span class="p">:</span> <span class="s">&#39;https://sci-hub.bar/&#39;</span>
+  <span class="nt">sci-hub.it.nf </span><span class="p">:</span> <span class="s">&#39;https://sci-hub.it.nf/&#39;</span>
 
 <span class="nt">default_doi_resolver </span><span class="p">:</span> <span class="s">&#39;oadoi.org&#39;</span>
 </pre></div>
