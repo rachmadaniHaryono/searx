@@ -18,8 +18,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="uwsgi" href="installation-uwsgi.html" />
-    <link rel="prev" title="Installation" href="installation.html" />
-   
+    <link rel="prev" title="Installation" href="installation.html" /> 
   </head><body>
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
@@ -621,6 +620,13 @@ $ sudo -H sed -i -e <span class="s2">&quot;s/{instance_name}/searx@</span><span 
     <span class="nt">timeout</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">3.0</span>
     <span class="nt">disabled </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
 
+  <span class="p p-Indicator">-</span> <span class="nt">name </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">tineye</span>
+    <span class="nt">engine </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">tineye</span>
+    <span class="nt">shortcut </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">tin</span>
+    <span class="nt">paging </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+    <span class="nt">timeout </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">9.0</span>
+    <span class="nt">disabled </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+
   <span class="p p-Indicator">-</span> <span class="nt">name </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">etools</span>
     <span class="nt">engine </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">etools</span>
     <span class="nt">shortcut </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">eto</span>
@@ -709,6 +715,13 @@ $ sudo -H sed -i -e <span class="s2">&quot;s/{instance_name}/searx@</span><span 
     <span class="nt">engine </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">gigablast</span>
     <span class="nt">shortcut </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">gb</span>
     <span class="nt">timeout </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">3.0</span>
+    <span class="c1"># Collection names to search in, separated by whitespaces.</span>
+    <span class="c1"># By default searx, queries the main collection.</span>
+    <span class="c1">#collections: main</span>
+    <span class="c1"># Search types, not required. possible values: images, news</span>
+    <span class="c1">#search_type: images</span>
+    <span class="c1"># Enable fast to get results quicker.</span>
+    <span class="c1">#fast : 1</span>
     <span class="nt">disabled</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
     <span class="nt">additional_tests</span><span class="p">:</span>
       <span class="nt">rosebud</span><span class="p">:</span> <span class="nv">*test_rosebud</span>
@@ -894,22 +907,19 @@ $ sudo -H sed -i -e <span class="s2">&quot;s/{instance_name}/searx@</span><span 
 
   <span class="p p-Indicator">-</span> <span class="nt">name </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">hoogle</span>
     <span class="nt">engine </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">xpath</span>
-    <span class="nt">paging </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
     <span class="nt">search_url </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">https://hoogle.haskell.org/?hoogle={query}&amp;start={pageno}</span>
     <span class="nt">results_xpath </span><span class="p">:</span> <span class="s">&#39;//div[@class=&quot;result&quot;]&#39;</span>
-    <span class="nt">title_xpath </span><span class="p">:</span> <span class="s">&#39;.//div[@class=&quot;ans&quot;]//a&#39;</span>
-    <span class="nt">url_xpath </span><span class="p">:</span> <span class="s">&#39;.//div[@class=&quot;ans&quot;]//a/@href&#39;</span>
-    <span class="nt">content_xpath </span><span class="p">:</span> <span class="s">&#39;.//div[@class=&quot;from&quot;]&#39;</span>
-    <span class="nt">page_size </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">20</span>
+    <span class="nt">title_xpath </span><span class="p">:</span> <span class="s">&#39;./div[@class=&quot;ans&quot;]&#39;</span>
+    <span class="nt">url_xpath </span><span class="p">:</span> <span class="s">&#39;./div[@class=&quot;ans&quot;]//a/@href&#39;</span>
+    <span class="nt">content_xpath </span><span class="p">:</span> <span class="s">&#39;./div[contains(@class,</span><span class="nv"> </span><span class="s">&quot;doc&quot;)]&#39;</span>
     <span class="nt">categories </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">it</span>
     <span class="nt">shortcut </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ho</span>
     <span class="nt">about</span><span class="p">:</span>
-      <span class="nt">website</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">https://www.haskell.org/</span>
+      <span class="nt">website</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">https://hoogle.haskell.org/</span>
       <span class="nt">wikidata_id</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Q34010</span>
-      <span class="nt">official_api_documentation</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">https://hackage.haskell.org/api</span>
       <span class="nt">use_official_api</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">false</span>
       <span class="nt">require_api_key</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">false</span>
-      <span class="nt">results</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">JSON</span>
+      <span class="nt">results</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">HTML</span>
 
   <span class="p p-Indicator">-</span> <span class="nt">name </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">imdb</span>
     <span class="nt">engine </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">imdb</span>
@@ -1119,6 +1129,26 @@ $ sudo -H sed -i -e <span class="s2">&quot;s/{instance_name}/searx@</span><span 
     <span class="nt">engine </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">openstreetmap</span>
     <span class="nt">shortcut </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">osm</span>
 
+<span class="c1">#  - name : prowlarr</span>
+<span class="c1">#    engine : prowlarr</span>
+<span class="c1">#    shortcut : prow</span>
+<span class="c1">#    categories : files</span>
+<span class="c1">#    enable_http : True</span>
+<span class="c1">#    api_key : &#39;&#39;</span>
+<span class="c1">#    indexer_ids : 5 # comma separated list of indexer ids</span>
+<span class="c1">#    search_categories : &#39;&#39; # comma separated list of categories</span>
+<span class="c1">#    search_type : search</span>
+<span class="c1">#    base_url: http://localhost:9696/api/v1/search?</span>
+<span class="c1">#    timeout : 50.0</span>
+<span class="c1">#    disabled : True,</span>
+<span class="c1">#    about :</span>
+<span class="c1">#      website : https://wiki.servarr.com/prowlarr</span>
+<span class="c1">#      wikidata_id : None</span>
+<span class="c1">#      official_api_documentation : https://wiki.servarr.com/prowlarr/search</span>
+<span class="c1">#      use_official_api : true</span>
+<span class="c1">#      require_api_key : true</span>
+<span class="c1">#      results : JSON</span>
+
   <span class="p p-Indicator">-</span> <span class="nt">name </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">openrepos</span>
     <span class="nt">engine </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">xpath</span>
     <span class="nt">paging </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
@@ -1313,13 +1343,6 @@ $ sudo -H sed -i -e <span class="s2">&quot;s/{instance_name}/searx@</span><span 
     <span class="nt">disabled </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
     <span class="nt">shortcut </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">se</span>
     <span class="nt">categories </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">science</span>
-    <span class="nt">about</span><span class="p">:</span>
-      <span class="nt">website</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">https://www.semanticscholar.org/</span>
-      <span class="nt">wikidata_id</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Q22908627</span>
-      <span class="nt">official_api_documentation</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">https://api.semanticscholar.org/</span>
-      <span class="nt">use_official_api</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">false</span>
-      <span class="nt">require_api_key</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">false</span>
-      <span class="nt">results</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">JSON</span>
 
 <span class="c1"># Spotify needs API credentials</span>
 <span class="c1">#  - name : spotify</span>
@@ -2092,7 +2115,7 @@ command twice).  At this point searx is not demonized; uwsgi allows this.</p>
   
     <div class="footer" role="contentinfo">
         &#169; Copyright 2015-2021, Adam Tauber, Noémi Ványi.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.4.0.
     </div>
   <script src="../_static/version_warning_offset.js"></script>
 
