@@ -1,19 +1,21 @@
 
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>How to update &#8212; Searx Documentation (Searx-1.0.0.tex)</title>
+    <title>How to update &#8212; Searx Documentation (Searx-1.1.0.tex)</title>
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../_static/searx.css" />
     <link rel="stylesheet" type="text/css" href="../_static/tabs.css" />
     <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../_static/doctools.js"></script>
+    <script src="../_static/sphinx_highlight.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="settings.yml" href="settings.html" />
@@ -34,7 +36,7 @@
         <li class="right" >
           <a href="installation-docker.html" title="Docker installation"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Searx Documentation (Searx-1.0.0.tex)</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Searx Documentation (Searx-1.1.0.tex)</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Administrator documentation</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">How to update</a></li> 
       </ul>
@@ -45,8 +47,8 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="how-to-update">
-<span id="update-searx"></span><h1>How to update<a class="headerlink" href="#how-to-update" title="Permalink to this headline">¶</a></h1>
+  <section id="how-to-update">
+<span id="update-searx"></span><h1>How to update<a class="headerlink" href="#how-to-update" title="Permalink to this heading">¶</a></h1>
 <p>How to update depends on the <a class="reference internal" href="installation.html#installation"><span class="std std-ref">Installation</span></a> method.  If you have used the
 <a class="reference internal" href="installation.html#installation-scripts"><span class="std std-ref">Installation scripts</span></a>, use <code class="docutils literal notranslate"><span class="pre">update</span></code> command from the scripts.</p>
 <p><strong>Update</strong> <a class="reference internal" href="../utils/searx.sh.html#searx-sh"><span class="std std-ref">searx service</span></a></p>
@@ -61,16 +63,16 @@
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo -H ./utils/morty.sh update morty
 </pre></div>
 </div>
-</div>
-<div class="section" id="how-to-inspect-debug">
-<span id="inspect-searx"></span><h1>How to inspect &amp; debug<a class="headerlink" href="#how-to-inspect-debug" title="Permalink to this headline">¶</a></h1>
-<div class="sidebar">
+</section>
+<section id="how-to-inspect-debug">
+<span id="inspect-searx"></span><h1>How to inspect &amp; debug<a class="headerlink" href="#how-to-inspect-debug" title="Permalink to this heading">¶</a></h1>
+<aside class="sidebar">
 <p class="sidebar-title">further read</p>
 <ul class="simple">
 <li><p><a class="reference internal" href="../utils/index.html#toolboxing"><span class="std std-ref">Admin’s tooling box</span></a></p></li>
 <li><p><a class="reference internal" href="../dev/makefile.html#makefile"><span class="std std-ref">Makefile</span></a></p></li>
 </ul>
-</div>
+</aside>
 <p>How to debug depends on the <a class="reference internal" href="installation.html#installation"><span class="std std-ref">Installation</span></a> method.  If you have used the
 <a class="reference internal" href="installation.html#installation-scripts"><span class="std std-ref">Installation scripts</span></a>, use <code class="docutils literal notranslate"><span class="pre">inspect</span></code> command from the scripts.</p>
 <p><strong>Inspect</strong> <a class="reference internal" href="../utils/searx.sh.html#searx-sh"><span class="std std-ref">searx service</span></a></p>
@@ -85,7 +87,7 @@
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo -H ./utils/morty.sh inspect service
 </pre></div>
 </div>
-</div>
+</section>
 
 
             <div class="clearer"></div>
@@ -104,13 +106,11 @@
 
   <h3>Project Links</h3>
   <ul>
-    <li><a href="blog/index.html">Blog</a>
+    <li><a href="https://searx.github.io/searx/blog/index.html">Blog</a>
   
     <li><a href="https://github.com/searx/searx">Source</a>
   
     <li><a href="https://github.com/searx/searx/wiki">Wiki</a>
-  
-    <li><a href="https://searx.space">Public instances</a>
   
     <li><a href="https://twitter.com/Searx_engine">Twitter</a>
   
@@ -136,15 +136,15 @@
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script>document.getElementById('searchbox').style.display = "block"</script>
         </div>
       </div>
       <div class="clearer"></div>
     </div>
   
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2015-2021, Adam Tauber, Noémi Ványi.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.4.0.
+        &#169; Copyright 2015-2022, Adam Tauber, Noémi Ványi.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.2.2.
     </div>
   <script src="../_static/version_warning_offset.js"></script>
 

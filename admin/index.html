@@ -1,19 +1,21 @@
 
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Administrator documentation &#8212; Searx Documentation (Searx-1.0.0.tex)</title>
+    <title>Administrator documentation &#8212; Searx Documentation (Searx-1.1.0.tex)</title>
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../_static/searx.css" />
     <link rel="stylesheet" type="text/css" href="../_static/tabs.css" />
     <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../_static/doctools.js"></script>
+    <script src="../_static/sphinx_highlight.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Installation" href="installation.html" />
@@ -34,7 +36,7 @@
         <li class="right" >
           <a href="../user/own-instance.html" title="Why use a private instance?"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Searx Documentation (Searx-1.0.0.tex)</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Searx Documentation (Searx-1.1.0.tex)</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">Administrator documentation</a></li> 
       </ul>
     </div>  
@@ -44,8 +46,8 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="administrator-documentation">
-<h1>Administrator documentation<a class="headerlink" href="#administrator-documentation" title="Permalink to this headline">¶</a></h1>
+  <section id="administrator-documentation">
+<h1>Administrator documentation<a class="headerlink" href="#administrator-documentation" title="Permalink to this heading">¶</a></h1>
 <div class="toctree-wrapper compound">
 <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
 <ul>
@@ -64,7 +66,7 @@
 <li class="toctree-l1"><a class="reference internal" href="installation-uwsgi.html">uwsgi</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="installation-uwsgi.html#origin-uwsgi">Origin uWSGI</a></li>
 <li class="toctree-l2"><a class="reference internal" href="installation-uwsgi.html#distributors">Distributors</a></li>
-<li class="toctree-l2"><a class="reference internal" href="installation-uwsgi.html#alltogether">Alltogether</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation-uwsgi.html#all-together">All together</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="installation-nginx.html">Install with nginx</a><ul>
@@ -114,6 +116,30 @@
 <li class="toctree-l2"><a class="reference internal" href="engines.html#general-engine-settings">General Engine Settings</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="private-engines.html">How to create private engines</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="private-engines.html#server-side-configuration">Server side configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="private-engines.html#client-side-configuration">Client side configuration</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="command-engine.html">Run shell commands from your instance</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="command-engine.html#the-command">The command</a></li>
+<li class="toctree-l2"><a class="reference internal" href="command-engine.html#access-control">Access control</a></li>
+<li class="toctree-l2"><a class="reference internal" href="command-engine.html#available-settings">Available settings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="command-engine.html#customize-the-result-template">Customize the result template</a></li>
+<li class="toctree-l2"><a class="reference internal" href="command-engine.html#examples">Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="indexer-engines.html">Search in indexers</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="indexer-engines.html#elasticsearch">Elasticsearch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="indexer-engines.html#meilisearch">Meilisearch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="indexer-engines.html#solr">Solr</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="no-sql-engines.html">Query SQL and NoSQL servers</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="no-sql-engines.html#sql">SQL</a></li>
+<li class="toctree-l2"><a class="reference internal" href="no-sql-engines.html#nosql">NoSQL</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="plugins.html">Plugins builtin</a></li>
 <li class="toctree-l1"><a class="reference internal" href="buildhosts.html">Buildhosts</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="buildhosts.html#build-docs">Build docs</a></li>
@@ -122,7 +148,7 @@
 </li>
 </ul>
 </div>
-</div>
+</section>
 
 
             <div class="clearer"></div>
@@ -141,13 +167,11 @@
 
   <h3>Project Links</h3>
   <ul>
-    <li><a href="blog/index.html">Blog</a>
+    <li><a href="https://searx.github.io/searx/blog/index.html">Blog</a>
   
     <li><a href="https://github.com/searx/searx">Source</a>
   
     <li><a href="https://github.com/searx/searx/wiki">Wiki</a>
-  
-    <li><a href="https://searx.space">Public instances</a>
   
     <li><a href="https://twitter.com/Searx_engine">Twitter</a>
   
@@ -170,15 +194,15 @@
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script>document.getElementById('searchbox').style.display = "block"</script>
         </div>
       </div>
       <div class="clearer"></div>
     </div>
   
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2015-2021, Adam Tauber, Noémi Ványi.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.4.0.
+        &#169; Copyright 2015-2022, Adam Tauber, Noémi Ványi.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.2.2.
     </div>
   <script src="../_static/version_warning_offset.js"></script>
 
